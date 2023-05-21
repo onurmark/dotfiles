@@ -47,3 +47,5 @@ map('n', '<Leader>bd', ':bdelete<CR>')
 map('n', '<Leader>bn', ':bnext<CR>')
 map('n', '<Leader>bp', ':bprevious<CR>')
 map('n', '<Leader>b<Tab>', ':buffer #<CR>')
+
+map('n', '<Leader><Tab>', ':ClangdSwitchSourceHeader<CR>')
