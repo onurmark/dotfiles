@@ -1,41 +1,49 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.opt.encoding = 'utf-8'
-vim.opt.fileencoding = 'utf-8'
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.cursorline = true
-vim.opt.cindent = true
-vim.opt.autoindent = true
-vim.opt.smartindent = true
-vim.opt.backspace = '2'
-vim.opt.hlsearch = true
-vim.opt.incsearch = true
-vim.opt.diffopt ='vertical'
-vim.opt.wildmenu = true
-vim.opt.wildmode = 'list:longest,full'
-vim.opt.path:append('./**')
-vim.opt.list = true
-vim.opt.listchars='tab:→ ,extends:›,precedes:‹,nbsp:·,trail:·'
-vim.opt.showbreak = '\\'
-vim.opt.visualbell = true
-vim.opt.hidden = true
-vim.opt.splitright = true
-vim.opt.splitbelow = true
-vim.opt.showcmd = true
-vim.opt.laststatus = 2
-vim.opt.autoread = true
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.shiftround = true
-vim.opt.expandtab = true
-vim.opt.smarttab = true
-vim.opt.colorcolumn = '80'
+local set = vim.opt
+local map = vim.keymap.set
 
-vim.keymap.set('n', '<leader>h', ':nohlsearch<CR>')
+set.encoding = 'utf-8'
+set.fileencoding = 'utf-8'
+set.number = true
+set.relativenumber = true
+set.cursorline = true
+set.cindent = true
+set.autoindent = true
+set.smartindent = true
+set.backspace = '2'
+set.hlsearch = true
+set.incsearch = true
+set.diffopt ='vertical'
+set.wildmenu = true
+set.wildmode = 'list:longest,full'
+set.path:append('./**')
+set.list = true
+set.listchars='tab:→ ,extends:›,precedes:‹,nbsp:·,trail:·'
+set.showbreak = '\\'
+set.visualbell = true
+set.hidden = true
+set.splitright = true
+set.splitbelow = true
+set.showcmd = true
+set.laststatus = 2
+set.autoread = true
+set.tabstop = 2
+set.shiftwidth = 2
+set.shiftround = true
+set.expandtab = true
+set.smarttab = true
+set.colorcolumn = '80'
 
-vim.keymap.set('n', '<c-h>', '<c-w>h')
-vim.keymap.set('n', '<c-j>', '<c-w>j')
-vim.keymap.set('n', '<c-k>', '<c-w>k')
-vim.keymap.set('n', '<c-l>', '<c-w>l')
+map('n', '<leader>h', ':nohlsearch<CR>')
+
+map('n', '<c-h>', '<c-w>h')
+map('n', '<c-j>', '<c-w>j')
+map('n', '<c-k>', '<c-w>k')
+map('n', '<c-l>', '<c-w>l')
+
+map('n', '<Leader>bd', ':bdelete<CR>')
+map('n', '<Leader>bn', ':bnext<CR>')
+map('n', '<Leader>bp', ':bprevious<CR>')
+map('n', '<Leader>b<Tab>', ':buffer #<CR>')
