@@ -10,5 +10,8 @@ require('lualine').setup {
         path = 1,
       }
     }
+  },
+  tabline = {
+    lualine_a = {'buffers'}
   }
 }

@@ -49,3 +49,5 @@ map('n', '<Leader>bp', ':bprevious<CR>')
 map('n', '<Leader>b<Tab>', ':buffer #<CR>')
 
 map('n', '<Leader><Tab>', ':ClangdSwitchSourceHeader<CR>')
+
+vim.api.nvim_create_user_command('Make', 'wa | make <args> | cwindow 3', { nargs = '*' })
