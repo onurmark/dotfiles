@@ -5,3 +5,10 @@ vim.api.nvim_create_autocmd("FileType", {
   command = "setlocal shiftwidth=4 tabstop=4 noexpandtab",
   group = group
 })
+
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+  pattern = "*.h",
+  command = "setlocal filetype=c",
+  group = group
+})
+
