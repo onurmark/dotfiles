@@ -1,4 +1,10 @@
-require('mason').setup()
+local ok, mason = pcall(require, 'mason')
+
+if not ok then
+  return
+end
+
+mason.setup()
 
 require('mason-lspconfig').setup({
   ensure_installed = { 'lua_ls', 'clangd' }
@@ -12,6 +18,8 @@ local on_attach = function(_, _)
   vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, {})
   vim.keymap.set('n', '<leader>gr', require('telescope.builtin').lsp_references, {})
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
+  vim.keymap.set('n', '<Leader>gn', vim.diagnostic.goto_next, {})
+  vim.keymap.set('n', '<Leader>gp', vim.diagnostic.goto_prev, {})
 end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()

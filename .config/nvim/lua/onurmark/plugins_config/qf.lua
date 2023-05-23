@@ -1,4 +1,10 @@
-require'qf'.setup {
+local ok, qf = pcall(require, 'qf')
+
+if not ok then
+  return
+end
+
+qf.setup {
   -- Location list configuration
   l = {
     auto_close = true, -- Automatically close location/quickfix list if empty

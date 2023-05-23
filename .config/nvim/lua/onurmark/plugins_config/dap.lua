@@ -1,4 +1,10 @@
-require('mason-nvim-dap').setup({
+local ok, dap = pcall(require, 'mason-nvim-dap')
+
+if not ok then
+  return
+end
+
+dap.setup({
   ensure_installed = { 'cpptools' },
   handlers = {
         function(config)
