@@ -32,12 +32,15 @@ return require('packer').startup(function(use)
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'neovim/nvim-lspconfig',
+    'mfussenegger/nvim-dap',
+    'jay-babu/mason-nvim-dap.nvim',
   }
   use 'tpope/vim-surround'
   use 'tpope/vim-fugitive'
   use 'lewis6991/gitsigns.nvim'
   use 'windwp/nvim-autopairs'
   use 'ten3roberts/qf.nvim'
+  use 'numToStr/comment.nvim'
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
