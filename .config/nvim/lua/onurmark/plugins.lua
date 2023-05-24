@@ -41,6 +41,7 @@ return require('packer').startup(function(use)
   use 'windwp/nvim-autopairs'
   use 'ten3roberts/qf.nvim'
   use 'numToStr/comment.nvim'
+  use 'wellle/targets.vim'
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

@@ -35,6 +35,7 @@ set.shiftround = true
 set.expandtab = true
 set.smarttab = true
 set.colorcolumn = '80'
+set.mouse = ''
 
 -- Clear search with <esc>
 map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
@@ -65,6 +66,12 @@ map('n', '<Leader>bd', ':bprevious <bar> bdelete #<CR>')
 map('n', '<Leader>bn', ':bnext<CR>')
 map('n', '<Leader>bp', ':bprevious<CR>')
 map('n', '<Leader>b<Tab>', ':buffer #<CR>')
+
+-- Move Lines
+map("n", "<Leader>n", "<cmd>m .+1<cr>==", { desc = "Move down" })
+map("n", "<Leader>p", "<cmd>m .-2<cr>==", { desc = "Move up" })
+map("v", "<Leader>n", ":m '>+1<cr>gv=gv", { desc = "Move down" })
+map("v", "<Leader>p", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
 map('n', '<Leader><Tab>', ':ClangdSwitchSourceHeader<CR>')
 
