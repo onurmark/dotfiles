@@ -68,10 +68,8 @@ map('n', '<Leader>bp', ':bprevious<CR>')
 map('n', '<Leader>b<Tab>', ':buffer #<CR>')
 
 -- Move Lines
-map("n", "<Leader>n", "<cmd>m .+1<cr>==", { desc = "Move down" })
-map("n", "<Leader>p", "<cmd>m .-2<cr>==", { desc = "Move up" })
-map("v", "<Leader>n", ":m '>+1<cr>gv=gv", { desc = "Move down" })
-map("v", "<Leader>p", ":m '<-2<cr>gv=gv", { desc = "Move up" })
+map("v", "<C-n>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
+map("v", "<C-p>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
 map('n', '<Leader><Tab>', ':ClangdSwitchSourceHeader<CR>')
 
