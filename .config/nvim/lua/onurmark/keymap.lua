@@ -36,19 +36,31 @@ set.expandtab = true
 set.smarttab = true
 set.colorcolumn = '80'
 
-map('n', '<leader>h', ':nohlsearch<CR>')
+-- Clear search with <esc>
+map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
 
+-- move to window
 map('n', '<c-h>', '<c-w>h')
 map('n', '<c-j>', '<c-w>j')
 map('n', '<c-k>', '<c-w>k')
 map('n', '<c-l>', '<c-w>l')
 
+-- window
 map('n', '<Leader>wh', '<c-w>h')
 map('n', '<Leader>wj', '<c-w>j')
 map('n', '<Leader>wk', '<c-w>k')
 map('n', '<Leader>wl', '<c-w>l')
 map('n', '<Leader>wd', '<c-w>q')
+map('n', '<Leader>wv', ':vsplit<CR>')
+map('n', '<Leader>wx', ':split<CR>')
 
+-- resize windows 
+map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
+map("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
+map("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
+map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
+
+-- buffer
 map('n', '<Leader>bd', ':bprevious <bar> bdelete #<CR>')
 map('n', '<Leader>bn', ':bnext<CR>')
 map('n', '<Leader>bp', ':bprevious<CR>')
