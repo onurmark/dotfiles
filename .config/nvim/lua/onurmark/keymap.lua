@@ -73,9 +73,12 @@ map("v", "<C-p>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
 map('n', '<Leader><Tab>', ':ClangdSwitchSourceHeader<CR>')
 
-vim.api.nvim_create_user_command('Make', 'wa | make <args> | cwindow 3', { nargs = '*' })
-
 map('n', '<space>e', vim.diagnostic.open_float)
 map('n', '[d', vim.diagnostic.goto_prev)
 map('n', ']d', vim.diagnostic.goto_next)
 map('n', '<space>q', vim.diagnostic.setloclist)
+
+vim.api.nvim_create_user_command('Make', 'wa | make <args> | cwindow 3', { nargs = '*' })
+vim.api.nvim_create_user_command('Mesonc', 'wa | :!meson compile -C <args>', { nargs = '*' })
+vim.api.nvim_create_user_command('Mesont', 'wa | :!meson test -C <args>', { nargs = '*' })
+
