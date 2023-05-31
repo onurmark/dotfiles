@@ -10,6 +10,8 @@ require('mason-lspconfig').setup({
   ensure_installed = { 'lua_ls', 'clangd', 'rust_analyzer' }
 })
 
+local rt = require("rust-tools")
+
 local on_attach = function(_, _)
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {})
   vim.keymap.set({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, {})
@@ -20,6 +22,10 @@ local on_attach = function(_, _)
   vim.keymap.set('n', '=', function()
     vim.lsp.buf.format { async = true }
   end)
+  -- -- Hover actions
+  -- vim.keymap.set("n", "K", rt.hover_actions.hover_actions, {})
+  -- -- Code action groups
+  -- vim.keymap.set("n", "<Leader>ca", rt.code_action_group.code_action_group, {})
 end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -51,3 +57,9 @@ require('lspconfig').rust_analyzer.setup {
   on_attach = on_attach,
   capabilities = capabilities,
 }
+
+rt.setup({
+  server = {
+    on_attach = on_attach,
+  },
+})
