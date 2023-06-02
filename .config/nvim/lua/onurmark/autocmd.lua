@@ -1,5 +1,5 @@
 local function augroup(name)
-  return vim.api.nvim_create_augroup("onurmark" .. name, {clear = true})
+  return vim.api.nvim_create_augroup("onurmark" .. name, { clear = true })
 end
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -8,7 +8,7 @@ vim.api.nvim_create_autocmd("FileType", {
   command = "setlocal shiftwidth=4 tabstop=4 noexpandtab",
 })
 
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   group = augroup('c_header'),
   pattern = "*.h",
   command = "setlocal filetype=c",
