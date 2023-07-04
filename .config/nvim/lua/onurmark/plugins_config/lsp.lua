@@ -7,14 +7,21 @@ end
 mason.setup()
 
 require('mason-lspconfig').setup({
-  ensure_installed = { 'lua_ls', 'clangd', 'rust_analyzer' }
+  ensure_installed = {
+    'lua_ls',
+    'clangd',
+    'rust_analyzer',
+    'angularls',
+    'tsserver',
+    'dockerls'
+  }
 })
 
 local rt = require("rust-tools")
 
 local on_attach = function(_, _)
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {})
-  vim.keymap.set({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, {})
+  vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, {})
   vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, {})
   vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, {})
   vim.keymap.set('n', '<leader>gr', require('telescope.builtin').lsp_references, {})
@@ -63,3 +70,27 @@ rt.setup({
     on_attach = on_attach,
   },
 })
+
+require('lspconfig').tsserver.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = {
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx"
+  },
+  cmd = {
+    "typescript-language-server",
+    "--stdio"
+  }
+}
+
+require('lspconfig').angularls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+require('lspconfig').dockerls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
