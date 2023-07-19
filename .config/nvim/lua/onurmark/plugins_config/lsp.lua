@@ -11,9 +11,6 @@ require('mason-lspconfig').setup({
     'lua_ls',
     'clangd',
     'rust_analyzer',
-    'angularls',
-    'tsserver',
-    'dockerls'
   }
 })
 
