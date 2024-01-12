@@ -9,13 +9,13 @@ lualine.setup {
     icons_enabled = true,
     theme = 'gruvbox',
   },
-  selections = {
+  sections = {
     lualine_a = {
       {
         'filename',
         path = 1,
       }
-    }
+    },
   },
   tabline = {
     lualine_a = {'buffers'}

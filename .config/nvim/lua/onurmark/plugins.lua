@@ -16,13 +16,29 @@ return require('packer').startup(function(use)
   use 'ellisonleao/gruvbox.nvim'
   use 'nvim-tree/nvim-tree.lua'
   use 'nvim-tree/nvim-web-devicons'
-  use 'nvim-lualine/lualine.nvim'
   use 'nvim-treesitter/nvim-treesitter'
   use {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.5',
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
+  use {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({})
+    end,
+  }
+  use {
+    'zbirenbaum/copilot-cmp',
+    after = { 'copilot.lua' },
+    config = function ()
+      require('copilot_cmp').setup()
+    end
+  }
+  use 'AndreM222/copilot-lualine'
+  use 'nvim-lualine/lualine.nvim'
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'L3MON4D3/LuaSnip'

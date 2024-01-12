@@ -11,6 +11,9 @@ require('mason-lspconfig').setup({
     'lua_ls',
     'clangd',
     'rust_analyzer',
+    'angularls',
+    'tsserver',
+    'dockerls'
   }
 })
 
@@ -90,4 +93,29 @@ require('lspconfig').angularls.setup {
 require('lspconfig').dockerls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
+}
+
+require('lspconfig').emmet_ls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = {
+    "css",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "less",
+    "sass",
+    "scss",
+    "svelte",
+    "pug",
+    "typescriptreact",
+    "vue"
+  },
+  init_options = {
+    html = {
+      options = {
+        ["bem.enabled"] = true,
+      },
+    },
+  }
 }
