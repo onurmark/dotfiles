@@ -12,7 +12,7 @@ require('mason-lspconfig').setup({
     'clangd',
     'rust_analyzer',
     'angularls',
-    'tsserver',
+    'ts_ls',
     'dockerls'
   }
 })
@@ -71,7 +71,7 @@ rt.setup({
   },
 })
 
-require('lspconfig').tsserver.setup {
+require('lspconfig').ts_ls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = {
