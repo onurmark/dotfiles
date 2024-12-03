@@ -170,5 +170,5 @@ map('n', '<Leader>eq', vim.diagnostic.setloclist, {
 })
 
 vim.api.nvim_create_user_command('Make', 'wa | make <args> | cwindow 3', { nargs = '*' })
-vim.api.nvim_create_user_command('Mesonc', 'wa | :!meson compile -C <args>', { nargs = '*' })
-vim.api.nvim_create_user_command('Mesont', 'wa | :!meson test -C <args>', { nargs = '*' })
+vim.api.nvim_create_user_command('Mesonc', 'wa | :!meson compile -C builddir', { nargs = '*' })
+vim.api.nvim_create_user_command('Mesont', 'wa | :!meson test -C builddir', { nargs = '*' })
