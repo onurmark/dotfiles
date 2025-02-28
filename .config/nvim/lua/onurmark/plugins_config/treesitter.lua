@@ -5,11 +5,20 @@ if not ok then
 end
 
 treesitter.setup {
-  ensure_installed = { 'c', 'lua', 'vim' },
+  ensure_installed = {
+    'c',
+    'lua',
+    'vim',
+    'typescript',
+    'tsx',
+    'html' },
 
   sync_install = false,
   auto_install = true,
   highlight = {
+    enable = true,
+  },
+  indent = {
     enable = true,
   },
 }

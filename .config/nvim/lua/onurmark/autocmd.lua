@@ -8,10 +8,34 @@ vim.api.nvim_create_autocmd("FileType", {
   command = "setlocal shiftwidth=4 tabstop=4 noexpandtab",
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup('typescriptreact_indent'),
+  pattern = "typescriptreact",
+  command = "setlocal shiftwidth=2 tabstop=2",
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup('tsx_indent'),
+  pattern = "tsx",
+  command = "setlocal shiftwidth=2 tabstop=2",
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup('html_indent'),
+  pattern = "html",
+  command = "setlocal shiftwidth=2 tabstop=2",
+})
+
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-  group = augroup('c_header'),
+  group = augroup('c_setting'),
   pattern = "*.h",
   command = "setlocal filetype=c",
+})
+
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  group = augroup('tsx_setting'),
+  pattern = "*.tsx",
+  command = "setlocal filetype=typescriptreact",
 })
 
 vim.api.nvim_create_autocmd("BufReadPost", {

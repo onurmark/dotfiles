@@ -13,7 +13,9 @@ require('mason-lspconfig').setup({
     'rust_analyzer',
     'angularls',
     'ts_ls',
-    'dockerls'
+    'dockerls',
+    'mesonlsp',
+    'emmet_ls'
   }
 })
 
@@ -77,7 +79,7 @@ require('lspconfig').ts_ls.setup {
   filetypes = {
     "typescript",
     "typescriptreact",
-    "typescript.tsx"
+    "typescript.tsx",
   },
   cmd = {
     "typescript-language-server",
@@ -109,7 +111,8 @@ require('lspconfig').emmet_ls.setup {
     "svelte",
     "pug",
     "typescriptreact",
-    "vue"
+    "vue",
+    "xml"
   },
   init_options = {
     html = {
@@ -119,3 +122,9 @@ require('lspconfig').emmet_ls.setup {
     },
   }
 }
+
+require('lspconfig').mesonlsp.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
