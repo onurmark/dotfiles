@@ -149,12 +149,6 @@ map("v", "<C-p>", ":m '<-2<cr>gv=gv", {
   desc = "Move lines up"
 })
 
--- Switch c source / header
-map('n', '<Leader><Tab>', ':ClangdSwitchSourceHeader<CR>', {
-  desc = "Switch source/header",
-  silent = true
-})
-
 vim.api.nvim_create_user_command('Make', 'wa | make <args> | cwindow 3', { nargs = '*' })
 vim.api.nvim_create_user_command('Mesonc', 'wa | :!meson compile -C builddir', { nargs = '*' })
 vim.api.nvim_create_user_command('Mesont', 'wa | :!meson test -C builddir', { nargs = '*' })

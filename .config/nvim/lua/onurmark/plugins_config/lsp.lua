@@ -6,130 +6,127 @@ end
 
 mason.setup()
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('onurmark.lsp', {}),
+  callback = function(args)
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
 
-local on_attach = function(_, _)
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {})
-  vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, {})
-  vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, {})
-  vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, {})
-  vim.keymap.set('n', '<leader>gr', require('telescope.builtin').lsp_references, {})
-  vim.keymap.set('n', '<leader>ee', vim.diagnostic.open_float, {})
-  vim.keymap.set('n', '<leader>ep', function()
-    vim.diagnostic.jump({count=-1, float=true})
-  end)
-  vim.keymap.set('n', '<leader>en', function()
-    vim.diagnostic.jump({count=1, float=true})
-  end)
-  vim.keymap.set('n', '<leader>eq', function()
-    vim.diagnostic.setqflist()
-  end)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
-  vim.keymap.set('n', '=', function()
-    vim.lsp.buf.format { async = true }
-  end)
-  -- -- Hover actions
-  -- vim.keymap.set("n", "K", rt.hover_actions.hover_actions, {})
-  -- -- Code action groups
-  -- vim.keymap.set("n", "<Leader>ca", rt.code_action_group.code_action_group, {})
-end
+    if client:supports_method('textDocument/codeAction') then
+      vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, {})
+    end
 
-local handlers = {
-  function(server_name)
-    require('lspconfig')[server_name].setup {}
+    if client:supports_method('textDocument/inlayHint') then
+      vim.keymap.set({ 'n', 'v' }, '<leader>ch', function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+      end)
+    end
+
+    if client:supports_method('textDocument/rename') then
+      vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {})
+    end
+
+    if client:supports_method('textDocument/declaration') then
+      vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, {})
+    end
+
+    if client:supports_method('textDocument/definition') then
+      vim.keymap.set('n', '<leader>gc', vim.lsp.buf.declaration, {})
+    end
+
+    if client:supports_method('textDocument/implementation') then
+      vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, {})
+    end
+
+    if client:supports_method('textDocument/references') then
+      vim.keymap.set('n', '<leader>gr', require('telescope.builtin').lsp_references, {})
+    end
+
+    if client:supports_method('textDocument/hover') then
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
+    end
+
+    if client:supports_method('textDocument/implementation') then
+      vim.keymap.set('n', '<leader>ee', vim.diagnostic.open_float, {})
+      vim.keymap.set('n', '<leader>ep', function()
+        vim.diagnostic.jump({ count = -1, float = true })
+      end)
+      vim.keymap.set('n', '<leader>en', function()
+        vim.diagnostic.jump({ count = 1, float = true })
+      end)
+      vim.keymap.set('n', '<leader>eq', function()
+        vim.diagnostic.setqflist()
+      end)
+    end
+
+    if client:supports_method('textDocument/formatting') then
+      vim.keymap.set('n', '=', function()
+        vim.lsp.buf.format { async = true }
+      end)
+    end
+
+    -- Switch c source / header
+    vim.keymap.set('n', '<Leader><Tab>', ':LspClangdSwitchSourceHeader<CR>', {
+      desc = "Switch source/header",
+      silent = true
+    })
   end,
-  ['lua_ls'] = function()
-    require('lspconfig').lua_ls.setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { 'vim' },
-          },
-          workspace = {
-            library = {
-              [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-              [vim.fn.stdpath "config" .. "/lua"] = true,
-            },
-          },
-        },
-      }
-    }
-  end,
-  ['rust_analyzer'] = function()
-    require('rust-tools').setup {
-      on_attach = on_attach,
-      capabilities = capabilities
-    }
-  end,
-  ['clangd'] = function()
-    require('lspconfig').clangd.setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-    }
-  end,
-  ['ts_ls'] = function()
-    require('lspconfig').ts_ls.setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-      filetypes = {
-        "typescript",
-        "typescriptreact",
-        "typescript.tsx",
+})
+
+vim.lsp.config('lua_ls', {
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { 'vim' },
       },
-      cmd = {
-        "typescript-language-server",
-        "--stdio"
-      }
-    }
-  end,
-  ['angularls'] = function()
-    require('lspconfig').angularls.setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-    }
-  end,
-  ['dockerls'] = function()
-    require('lspconfig').dockerls.setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-    }
-  end,
-  ['emmet_ls'] = function()
-    require('lspconfig').emmet_ls.setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-      filetypes = {
-        "css",
-        "html",
-        "javascript",
-        "javascriptreact",
-        "less",
-        "sass",
-        "scss",
-        "svelte",
-        "pug",
-        "typescriptreact",
-        "vue",
-        "xml"
-      },
-      init_options = {
-        html = {
-          options = {
-            ["bem.enabled"] = true,
-          },
+      workspace = {
+        library = {
+          [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+          [vim.fn.stdpath "config" .. "/lua"] = true,
         },
-      }
+      },
+    },
+  }
+})
+
+vim.lsp.config('ts_ls', {
+  settings = {
+    filetypes = {
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+    },
+    cmd = {
+      "typescript-language-server",
+      "--stdio"
     }
-  end,
-  ['mesonlsp'] = function()
-    require('lspconfig').mesonlsp.setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
+  }
+})
+
+vim.lsp.config('emmet_ls', {
+  settings = {
+    filetypes = {
+      "css",
+      "html",
+      "javascript",
+      "javascriptreact",
+      "less",
+      "sass",
+      "scss",
+      "svelte",
+      "pug",
+      "typescriptreact",
+      "vue",
+      "xml"
+    },
+    init_options = {
+      html = {
+        options = {
+          ["bem.enabled"] = true,
+        },
+      },
     }
-  end,
-}
+  }
+})
 
 require('mason-lspconfig').setup({
   ensure_installed = {
@@ -142,5 +139,4 @@ require('mason-lspconfig').setup({
     'emmet_ls',
     'mesonlsp'
   },
-  handlers = handlers,
 })
