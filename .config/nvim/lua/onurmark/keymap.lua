@@ -155,20 +155,6 @@ map('n', '<Leader><Tab>', ':ClangdSwitchSourceHeader<CR>', {
   silent = true
 })
 
--- Diagnostic
-map('n', '<Leader>ee', vim.diagnostic.open_float, {
-  desc = "Float diagnostic"
-})
-map('n', '<Leader>ep', vim.diagnostic.goto_prev, {
-  desc = "Go to previous diagnostic"
-})
-map('n', '<Leader>en', vim.diagnostic.goto_next, {
-  desc = "Go to next diagnostic"
-})
-map('n', '<Leader>eq', vim.diagnostic.setloclist, {
-  desc = "Open diagnostic location list"
-})
-
 vim.api.nvim_create_user_command('Make', 'wa | make <args> | cwindow 3', { nargs = '*' })
 vim.api.nvim_create_user_command('Mesonc', 'wa | :!meson compile -C builddir', { nargs = '*' })
 vim.api.nvim_create_user_command('Mesont', 'wa | :!meson test -C builddir', { nargs = '*' })
