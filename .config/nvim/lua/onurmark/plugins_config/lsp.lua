@@ -6,20 +6,7 @@ end
 
 mason.setup()
 
-require('mason-lspconfig').setup({
-  ensure_installed = {
-    'lua_ls',
-    'clangd',
-    'rust_analyzer',
-    'angularls',
-    'ts_ls',
-    'dockerls',
-    'mesonlsp',
-    'emmet_ls'
-  }
-})
-
-local rt = require("rust-tools")
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local on_attach = function(_, _)
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {})
@@ -27,6 +14,9 @@ local on_attach = function(_, _)
   vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, {})
   vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, {})
   vim.keymap.set('n', '<leader>gr', require('telescope.builtin').lsp_references, {})
+  vim.keymap.set('n', '<leader>ee', vim.diagnostic.open_float, {})
+  vim.keymap.set('n', '<leader>ep', vim.diagnostic.jump, {count=-1})
+  vim.keymap.set('n', '<leader>en', vim.diagnostic.jump, {count=1})
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
   vim.keymap.set('n', '=', function()
     vim.lsp.buf.format { async = true }
@@ -37,94 +27,113 @@ local on_attach = function(_, _)
   -- vim.keymap.set("n", "<Leader>ca", rt.code_action_group.code_action_group, {})
 end
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-require('lspconfig').lua_ls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { 'vim' },
-      },
-      workspace = {
-        library = {
-          [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-          [vim.fn.stdpath "config" .. "/lua"] = true,
+local handlers = {
+  function(server_name)
+    require('lspconfig')[server_name].setup {}
+  end,
+  ['lua_ls'] = function()
+    require('lspconfig').lua_ls.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = { 'vim' },
+          },
+          workspace = {
+            library = {
+              [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+              [vim.fn.stdpath "config" .. "/lua"] = true,
+            },
+          },
         },
+      }
+    }
+  end,
+  ['rust_analyzer'] = function()
+    require('rust-tools').setup {
+      on_attach = on_attach,
+      capabilities = capabilities
+    }
+  end,
+  ['clangd'] = function()
+    require('lspconfig').clangd.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
+  end,
+  ['ts_ls'] = function()
+    require('lspconfig').ts_ls.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = {
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx",
       },
-    },
-  }
+      cmd = {
+        "typescript-language-server",
+        "--stdio"
+      }
+    }
+  end,
+  ['angularls'] = function()
+    require('lspconfig').angularls.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
+  end,
+  ['dockerls'] = function()
+    require('lspconfig').dockerls.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
+  end,
+  ['emmet_ls'] = function()
+    require('lspconfig').emmet_ls.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = {
+        "css",
+        "html",
+        "javascript",
+        "javascriptreact",
+        "less",
+        "sass",
+        "scss",
+        "svelte",
+        "pug",
+        "typescriptreact",
+        "vue",
+        "xml"
+      },
+      init_options = {
+        html = {
+          options = {
+            ["bem.enabled"] = true,
+          },
+        },
+      }
+    }
+  end,
+  ['mesonlsp'] = function()
+    require('lspconfig').mesonlsp.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
+  end,
 }
 
-require('lspconfig').clangd.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-require('lspconfig').rust_analyzer.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-rt.setup({
-  server = {
-    on_attach = on_attach,
+require('mason-lspconfig').setup({
+  ensure_installed = {
+    'lua_ls',
+    'clangd',
+    'rust_analyzer',
+    'angularls',
+    'ts_ls',
+    'dockerls',
+    'emmet_ls',
+    'mesonlsp'
   },
+  handlers = handlers,
 })
-
-require('lspconfig').ts_ls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  filetypes = {
-    "typescript",
-    "typescriptreact",
-    "typescript.tsx",
-  },
-  cmd = {
-    "typescript-language-server",
-    "--stdio"
-  }
-}
-
-require('lspconfig').angularls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-require('lspconfig').dockerls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-require('lspconfig').emmet_ls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  filetypes = {
-    "css",
-    "html",
-    "javascript",
-    "javascriptreact",
-    "less",
-    "sass",
-    "scss",
-    "svelte",
-    "pug",
-    "typescriptreact",
-    "vue",
-    "xml"
-  },
-  init_options = {
-    html = {
-      options = {
-        ["bem.enabled"] = true,
-      },
-    },
-  }
-}
-
-require('lspconfig').mesonlsp.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
