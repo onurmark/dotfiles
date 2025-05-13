@@ -45,7 +45,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
     end
 
-    if client:supports_method('textDocument/implementation') then
+    -- if client:supports_method('textDocument/diagnostic') then
       vim.keymap.set('n', '<leader>ee', vim.diagnostic.open_float, {})
       vim.keymap.set('n', '<leader>ep', function()
         vim.diagnostic.jump({ count = -1, float = true })
@@ -56,7 +56,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set('n', '<leader>eq', function()
         vim.diagnostic.setqflist()
       end)
-    end
+    -- end
 
     if client:supports_method('textDocument/formatting') then
       vim.keymap.set('n', '=', function()
@@ -86,6 +86,13 @@ vim.lsp.config('lua_ls', {
       },
     },
   }
+})
+
+vim.lsp.config('clangd', {
+  cmd = {
+    "clangd",
+    "-header-insertion=never"
+  },
 })
 
 vim.lsp.config('ts_ls', {
