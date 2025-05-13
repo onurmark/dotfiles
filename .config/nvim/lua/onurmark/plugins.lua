@@ -33,7 +33,7 @@ return require('packer').startup(function(use)
   use {
     'zbirenbaum/copilot-cmp',
     after = { 'copilot.lua' },
-    config = function ()
+    config = function()
       require('copilot_cmp').setup()
     end
   }
@@ -52,7 +52,11 @@ return require('packer').startup(function(use)
   }
   use { "folke/neodev.nvim", opts = {} }
   use { "rcarriga/nvim-dap-ui",
-    requires = { "mfussenegger/nvim-dap" } }
+    requires = {
+      "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio"
+    }
+  }
   use 'simrat39/rust-tools.nvim'
   use 'tpope/vim-surround'
   use 'tpope/vim-fugitive'
