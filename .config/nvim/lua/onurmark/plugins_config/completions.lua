@@ -58,7 +58,7 @@ cmp.setup({
     },
     {
       name = 'nvim_lsp',
-      max_item_count = 10,
+      -- max_item_count = 10,
       group_index = 2
     },
     {

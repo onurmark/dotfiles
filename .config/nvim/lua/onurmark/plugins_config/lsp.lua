@@ -110,28 +110,26 @@ vim.lsp.config('ts_ls', {
 })
 
 vim.lsp.config('emmet_ls', {
-  settings = {
-    filetypes = {
-      "css",
-      "html",
-      "javascript",
-      "javascriptreact",
-      "less",
-      "sass",
-      "scss",
-      "svelte",
-      "pug",
-      "typescriptreact",
-      "vue",
-      "xml"
-    },
-    init_options = {
-      html = {
-        options = {
-          ["bem.enabled"] = true,
-        },
+  filetypes = {
+    "css",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "less",
+    "sass",
+    "scss",
+    "svelte",
+    "pug",
+    "typescriptreact",
+    "vue",
+    "xml"
+  },
+  init_options = {
+    html = {
+      options = {
+        ["bem.enabled"] = true,
       },
-    }
+    },
   }
 })
 

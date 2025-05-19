@@ -150,5 +150,7 @@ map("v", "<C-p>", ":m '<-2<cr>gv=gv", {
 })
 
 vim.api.nvim_create_user_command('Make', 'wa | make <args> | cwindow 3', { nargs = '*' })
+
+vim.api.nvim_create_user_command('Mesons', 'wa | :!meson setup --reconfigure builddir', { nargs = '*' })
 vim.api.nvim_create_user_command('Mesonc', 'wa | :!meson compile -C builddir', { nargs = '*' })
 vim.api.nvim_create_user_command('Mesont', 'wa | :!meson test -C builddir', { nargs = '*' })
