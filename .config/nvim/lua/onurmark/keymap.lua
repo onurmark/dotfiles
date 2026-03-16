@@ -154,3 +154,17 @@ vim.api.nvim_create_user_command('Make', 'wa | make <args> | cwindow 3', { nargs
 vim.api.nvim_create_user_command('Mesons', 'wa | :!meson setup --reconfigure builddir', { nargs = '*' })
 vim.api.nvim_create_user_command('Mesonc', 'wa | :!meson compile -C builddir', { nargs = '*' })
 vim.api.nvim_create_user_command('Mesont', 'wa | :!meson test -C builddir', { nargs = '*' })
+
+vim.g.clipboard = {
+  name = 'OSC 52',
+  copy = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+  },
+  paste = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+  },
+}
+
+vim.opt.clipboard = 'unnamedplus'

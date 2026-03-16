@@ -46,16 +46,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     -- if client:supports_method('textDocument/diagnostic') then
-      vim.keymap.set('n', '<leader>ee', vim.diagnostic.open_float, {})
-      vim.keymap.set('n', '<leader>ep', function()
-        vim.diagnostic.jump({ count = -1, float = true })
-      end)
-      vim.keymap.set('n', '<leader>en', function()
-        vim.diagnostic.jump({ count = 1, float = true })
-      end)
-      vim.keymap.set('n', '<leader>eq', function()
-        vim.diagnostic.setqflist()
-      end)
+    vim.keymap.set('n', '<leader>ee', vim.diagnostic.open_float, {})
+    vim.keymap.set('n', '<leader>ep', function()
+      vim.diagnostic.jump({ count = -1, float = true })
+    end)
+    vim.keymap.set('n', '<leader>en', function()
+      vim.diagnostic.jump({ count = 1, float = true })
+    end)
+    vim.keymap.set('n', '<leader>eq', function()
+      vim.diagnostic.setqflist()
+    end)
     -- end
 
     if client:supports_method('textDocument/formatting') then
@@ -93,20 +93,6 @@ vim.lsp.config('clangd', {
     "clangd",
     "-header-insertion=never"
   },
-})
-
-vim.lsp.config('ts_ls', {
-  settings = {
-    filetypes = {
-      "typescript",
-      "typescriptreact",
-      "typescript.tsx",
-    },
-    cmd = {
-      "typescript-language-server",
-      "--stdio"
-    }
-  }
 })
 
 vim.lsp.config('emmet_ls', {
