@@ -149,12 +149,6 @@ map("v", "<C-p>", ":m '<-2<cr>gv=gv", {
   desc = "Move lines up"
 })
 
-vim.api.nvim_create_user_command('Make', 'wa | make <args> | cwindow 3', { nargs = '*' })
-
-vim.api.nvim_create_user_command('Mesons', 'wa | :!meson setup --reconfigure builddir', { nargs = '*' })
-vim.api.nvim_create_user_command('Mesonc', 'wa | :!meson compile -C builddir', { nargs = '*' })
-vim.api.nvim_create_user_command('Mesont', 'wa | :!meson test -C builddir', { nargs = '*' })
-
 vim.g.clipboard = {
   name = 'OSC 52',
   copy = {
@@ -168,3 +162,56 @@ vim.g.clipboard = {
 }
 
 vim.opt.clipboard = 'unnamedplus'
+
+vim.api.nvim_create_user_command('Make', function(opts)
+	local uv = vim.loop
+	local args = table.concat(opts.fargs, " "):gsub("^%s*(.-)%s*$", "%1") -- trim
+	local is_meson = false
+	local is_makefile = false
+
+	local function file_exists(path)
+		local stat = uv.fs_stat(path)
+		return stat and stat.type == "file"
+	end
+
+	local function dir_exists(path)
+		local stat = uv.fs_stat(path)
+		return stat and stat.type == "directory"
+	end
+
+	-- 빌드 시스템 감지
+	if file_exists("meson.build") then
+		is_meson = true
+		if not dir_exists("builddir") then
+			vim.fn.system({ "meson", "setup", "builddir" })
+		end
+	elseif file_exists("Makefile") or file_exists("makefile") then
+		is_makefile = true
+	else
+		vim.notify("No build system (meson.build or Makefile) found.", vim.log.levels.ERROR)
+		return
+	end
+
+	-- makeprg 설정
+	if is_meson then
+		if args == "test" then
+			vim.opt.makeprg = "meson test -C builddir"
+		elseif args == "clean" then
+			vim.opt.makeprg = "meson compile -C builddir --clean"
+		elseif args == "install" then
+			vim.opt.makeprg = "meson install -C builddir"
+		else
+			vim.opt.makeprg = "meson compile -C builddir " .. args
+		end
+	elseif is_makefile then
+		vim.opt.makeprg = "make " .. args
+	end
+
+	-- 파일 저장 후 make 실행
+	vim.cmd("wa")
+	vim.cmd("make")
+  vim.cmd('cwindow 3')
+end, {
+	nargs = "*"
+})
+

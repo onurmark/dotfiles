@@ -18,8 +18,7 @@ return require('packer').startup(function(use)
   use 'nvim-tree/nvim-web-devicons'
   use 'nvim-treesitter/nvim-treesitter'
   use {
-    'nvim-telescope/telescope.nvim',
-    tag = '0.1.5',
+    'nvim-telescope/telescope.nvim', version = '*',
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
   -- use {
